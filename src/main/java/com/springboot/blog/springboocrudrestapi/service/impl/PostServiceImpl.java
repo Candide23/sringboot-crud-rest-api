@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,6 +67,16 @@ public class PostServiceImpl implements PostService {
 
         return mapToDTO(updatePost);
 
+
+
+    }
+
+    @Override
+    public void deletePosts(long id) {
+
+        // get post by id from the database
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        postRepository.delete(post);
 
 
     }

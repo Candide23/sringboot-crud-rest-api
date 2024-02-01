@@ -33,9 +33,11 @@ public class PostController {
 
     // get all post rest api
     @GetMapping()
-    public ResponseEntity<List<PostDto>> getAllPost( PostDto postDto){
+    public List<PostDto> getAllPost( @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){
 
-        return ResponseEntity.ok(postService.getAllPosts(postDto));
+        return postService.getAllPosts(pageNo, pageSize);
+
+
     }
 
     // get post by id

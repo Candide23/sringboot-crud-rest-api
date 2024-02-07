@@ -5,6 +5,7 @@ import com.springboot.blog.springboocrudrestapi.entity.Post;
 import com.springboot.blog.springboocrudrestapi.exception.BlogAPIException;
 import com.springboot.blog.springboocrudrestapi.exception.ResourceNotFoundException;
 import com.springboot.blog.springboocrudrestapi.payload.CommentDto;
+import com.springboot.blog.springboocrudrestapi.payload.PostDto;
 import com.springboot.blog.springboocrudrestapi.repository.CommentRepository;
 import com.springboot.blog.springboocrudrestapi.repository.PostRepository;
 import com.springboot.blog.springboocrudrestapi.service.CommentService;
@@ -70,6 +71,26 @@ public class CommentServiceImpl implements CommentService {
         }
 
         return mapToDTO(comment);
+    }
+
+    @Override
+    public CommentDto updateComments(Long postId, Long commentId, CommentDto commentRequest) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post","postId",postId));
+
+
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment","Id", commentId));
+
+        if(!comment.getPost().getId().equals(post.getId())) {
+            new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment doest not belong to post");
+        }
+
+        comment.setBody(commentRequest.getBody());
+        comment.setName(commentRequest.getName());
+        comment.setEmail(commentRequest.getEmail());
+
+        Comment updateComment = commentRepository.save(comment);
+
+        return mapToDTO(updateComment);
     }
 
 

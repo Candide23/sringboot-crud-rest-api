@@ -6,6 +6,7 @@ import com.springboot.blog.springboocrudrestapi.payload.PostDto;
 import com.springboot.blog.springboocrudrestapi.payload.PostResponse;
 import com.springboot.blog.springboocrudrestapi.repository.PostRepository;
 import com.springboot.blog.springboocrudrestapi.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,10 +23,16 @@ public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
 
+    private ModelMapper modelMapper;
+
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
+        this.modelMapper = modelMapper;
     }
+
+    @Autowired
+
 
     @Override
     public PostDto createPost(PostDto postDto) {
@@ -107,21 +114,26 @@ public class PostServiceImpl implements PostService {
 
     // convert entity to DTO
     private PostDto mapToDTO(Post post){
-          PostDto postDto = new PostDto();
-          postDto.setId(post.getId());
-          postDto.setTitle(post.getTitle());
-          postDto.setDescription(post.getDescription());
-          postDto.setContent(post.getContent());
+
+        PostDto postDto = modelMapper.map(post,PostDto.class);
+
+          //PostDto postDto = new PostDto();
+          //postDto.setId(post.getId());
+          //postDto.setTitle(post.getTitle());
+          //postDto.setDescription(post.getDescription());
+          //postDto.setContent(post.getContent());
         return postDto;
     }
 
     // convert Dto to Entity
     private Post mapToEntity(PostDto postDto){
 
-          Post post = new Post();
+        Post post = modelMapper.map(postDto, Post.class);
+
+          /*Post post = new Post();
           post.setTitle(postDto.getTitle());
           post.setDescription(postDto.getDescription());
-          post.setContent(postDto.getContent());
+          post.setContent(postDto.getContent());*/
           return post;
     }
 

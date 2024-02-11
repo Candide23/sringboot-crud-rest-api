@@ -23,15 +23,14 @@ public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
 
-    private ModelMapper modelMapper;
+    private ModelMapper mapper;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
+    public PostServiceImpl(PostRepository postRepository, ModelMapper mapper) {
         this.postRepository = postRepository;
-        this.modelMapper = modelMapper;
+        this.mapper = mapper;
     }
 
-    @Autowired
 
 
     @Override
@@ -115,7 +114,7 @@ public class PostServiceImpl implements PostService {
     // convert entity to DTO
     private PostDto mapToDTO(Post post){
 
-        PostDto postDto = modelMapper.map(post,PostDto.class);
+        PostDto postDto = mapper.map(post,PostDto.class);
 
           //PostDto postDto = new PostDto();
           //postDto.setId(post.getId());
@@ -128,7 +127,7 @@ public class PostServiceImpl implements PostService {
     // convert Dto to Entity
     private Post mapToEntity(PostDto postDto){
 
-        Post post = modelMapper.map(postDto, Post.class);
+        Post post = mapper.map(postDto, Post.class);
 
           /*Post post = new Post();
           post.setTitle(postDto.getTitle());

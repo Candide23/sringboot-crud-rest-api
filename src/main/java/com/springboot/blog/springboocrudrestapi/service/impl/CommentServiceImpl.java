@@ -24,13 +24,13 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     private PostRepository postRepository;
 
-    private ModelMapper modelMapper;
+    private ModelMapper mapper;
 
 
-    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, ModelMapper modelMapper) {
+    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, ModelMapper mapper) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
-        this.modelMapper = modelMapper;
+        this.mapper = mapper;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class CommentServiceImpl implements CommentService {
 
     private CommentDto mapToDTO( Comment comment ){
 
-        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
+        CommentDto commentDto = mapper.map(comment, CommentDto.class);
 
         /*CommentDto commentDto = new CommentDto();
 
@@ -135,7 +135,7 @@ public class CommentServiceImpl implements CommentService {
 
     private Comment mapToEntity( CommentDto commentDto){
 
-        Comment comment = modelMapper.map(commentDto, Comment.class);
+        Comment comment = mapper.map(commentDto, Comment.class);
 
         /*Comment comment = new Comment();
 

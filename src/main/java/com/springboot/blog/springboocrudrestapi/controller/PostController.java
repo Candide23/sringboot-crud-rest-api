@@ -26,7 +26,7 @@ public class PostController {
 
     // create blog post
 
-    @PreAuthorize("hasRole('ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
 
@@ -60,7 +60,7 @@ public class PostController {
 
     // update post by id rest api
 
-    @PreAuthorize("hasRole('ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePostById(@Valid @RequestBody PostDto postDto, @PathVariable("id") long id){
 
@@ -73,7 +73,7 @@ public class PostController {
 
     // delete post by id
 
-    @PreAuthorize("hasRole('ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable("id") long id){
 

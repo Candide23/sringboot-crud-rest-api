@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class SpringbooCrudRestApiApplication {
+public class SpringBootCrudRestApiApplication {
 
 	@Bean
 	public ModelMapper modelMapper(){
@@ -14,7 +14,7 @@ public class SpringbooCrudRestApiApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbooCrudRestApiApplication.class, args);
+		SpringApplication.run(SpringBootCrudRestApiApplication.class, args);
 	}
 
 }

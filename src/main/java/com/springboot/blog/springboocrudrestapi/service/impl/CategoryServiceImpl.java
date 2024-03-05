@@ -1,6 +1,7 @@
 package com.springboot.blog.springboocrudrestapi.service.impl;
 
 import com.springboot.blog.springboocrudrestapi.entity.Category;
+import com.springboot.blog.springboocrudrestapi.exception.ResourceNotFoundException;
 import com.springboot.blog.springboocrudrestapi.payload.CategoryDto;
 import com.springboot.blog.springboocrudrestapi.repository.CategoryRepository;
 import com.springboot.blog.springboocrudrestapi.service.CategoryService;
@@ -26,5 +27,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = modelMapper.map(categoryDto, Category.class);
         Category saveCategory = categoryRepository.save(category);
         return modelMapper.map(saveCategory, CategoryDto.class);
+    }
+
+    @Override
+    public CategoryDto getCategory(Long categoryId) {
+
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId) );
+
+        return modelMapper.map(category, CategoryDto.class);
     }
 }

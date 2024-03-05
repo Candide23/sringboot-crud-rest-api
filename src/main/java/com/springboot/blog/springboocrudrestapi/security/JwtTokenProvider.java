@@ -22,11 +22,11 @@ public class JwtTokenProvider {
     @Value("${app.jwt-secret}")
     private String jwtSecret;
 
-    @Value("${app.jwt-expiration-milliseconds}")
+    @Value("${app-jwt-expiration-milliseconds}")
     private long jwtExpirationDate;
 
     // generate JWT token
-    public  String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication){
 
         String username = authentication.getName();
 
@@ -41,16 +41,15 @@ public class JwtTokenProvider {
                 .signWith(key())
                 .compact();
 
-        return  token;
+        return token;
     }
 
     private Key key(){
-     return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
-
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
     // get username from JWT token
-    public String getUsername(String token) {
+    public String getUsername(String token){
 
         return Jwts.parser()
                 .verifyWith((SecretKey) key())
@@ -58,27 +57,24 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
-
     }
 
     // validate JWT token
-    public  boolean validateToken(String token) {
-        try {
+    public boolean validateToken(String token){
+        try{
             Jwts.parser()
                     .verifyWith((SecretKey) key())
                     .build()
                     .parse(token);
             return true;
-        }catch (MalformedJwtException malformedJwtException) {
+        }catch (MalformedJwtException malformedJwtException){
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Invalid JWT Token");
         }catch (ExpiredJwtException expiredJwtException){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Expired JWT Token");
-        } catch (UnsupportedJwtException unsupportedJwtException) {
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Unsupported JWT Token");
-        } catch (IllegalArgumentException illegalArgumentException){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Jwt claims string is null or empty ");
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Expired JWT token");
+        }catch (UnsupportedJwtException unsupportedJwtException){
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Unsupported JWT token");
+        }catch (IllegalArgumentException illegalArgumentException){
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Jwt claims string is null or empty");
         }
-
     }
-
 }

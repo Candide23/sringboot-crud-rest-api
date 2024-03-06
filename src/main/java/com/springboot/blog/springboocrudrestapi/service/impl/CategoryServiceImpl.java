@@ -8,6 +8,9 @@ import com.springboot.blog.springboocrudrestapi.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -35,5 +38,27 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId) );
 
         return modelMapper.map(category, CategoryDto.class);
+    }
+
+    @Override
+    public List<CategoryDto> getAllCategories() {
+
+        List <Category> categories = categoryRepository.findAll();
+
+        return categories.stream().map(category -> modelMapper.map(category, CategoryDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CategoryDto updateCategories(Long categoryId, CategoryDto categoryDto) {
+
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId) );
+
+       category.setDescription(categoryDto.getDescription());
+       category.setName(categoryDto.getName());
+
+       Category updateCategory = categoryRepository.save(category);
+
+       return modelMapper.map(updateCategory, CategoryDto.class);
     }
 }

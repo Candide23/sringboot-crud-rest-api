@@ -1,8 +1,10 @@
 package com.springboot.blog.springboocrudrestapi.controller;
 
 
+import com.springboot.blog.springboocrudrestapi.entity.Post;
 import com.springboot.blog.springboocrudrestapi.payload.PostDto;
 import com.springboot.blog.springboocrudrestapi.payload.PostResponse;
+import com.springboot.blog.springboocrudrestapi.service.CategoryService;
 import com.springboot.blog.springboocrudrestapi.service.PostService;
 import com.springboot.blog.springboocrudrestapi.utils.AppConstants;
 import jakarta.validation.Valid;
@@ -19,6 +21,7 @@ public class PostController {
 
 
     private PostService postService;
+
 
     public PostController(PostService postService) {
         this.postService = postService;
@@ -58,10 +61,17 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<PostDto>> getPostByCategoryId(@PathVariable("id") long categoryId) {
+
+
+        return ResponseEntity.ok(postService.getPostByCategories(categoryId));
+    }
+
     // update post by id rest api
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<PostDto> updatePostById(@Valid @RequestBody PostDto postDto, @PathVariable("id") long id){
 
 
@@ -81,9 +91,6 @@ public class PostController {
 
 
         return new ResponseEntity<>("Post entity delete successfully", HttpStatus.OK);
-
-
-
 
     }
 

@@ -11,6 +11,8 @@ public interface PostService {
 
     PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir);
 
+    List<PostDto> getPostByCategories(long categoryId );
+
    PostDto getPostById(long id);
 
    PostDto updatePosts(PostDto postDto, long id);

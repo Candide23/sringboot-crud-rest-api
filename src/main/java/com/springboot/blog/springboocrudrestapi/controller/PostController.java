@@ -7,7 +7,10 @@ import com.springboot.blog.springboocrudrestapi.payload.PostResponse;
 import com.springboot.blog.springboocrudrestapi.service.CategoryService;
 import com.springboot.blog.springboocrudrestapi.service.PostService;
 import com.springboot.blog.springboocrudrestapi.utils.AppConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
+@Tag(
+        name = "CRUD REST APIs for Post Resource"
+)
 public class PostController {
 
 
@@ -30,6 +36,14 @@ public class PostController {
 
     // create blog post
 
+    @Operation(
+            summary = "Create Post REST API",
+            description = "Create Post REST API is used to save post into database"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "Http Status 201 CREATED"
+    )
     @SecurityRequirement(
             name = "Bear Authentication"
 
@@ -44,6 +58,14 @@ public class PostController {
     }
 
 
+    @Operation(
+            summary = "Get All Post REST API",
+            description = "Get All Post REST API is used to Get All Post from the database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     // get all post rest api
     @GetMapping
     public PostResponse getAllPosts(
@@ -57,7 +79,14 @@ public class PostController {
 
     // get post by id
 
-
+    @Operation(
+            summary = "Get Post REST API",
+            description = "Get Post REST API is used to get a single Post from the database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable("id") long id) {
 
@@ -75,6 +104,14 @@ public class PostController {
 
     // update post by id rest api
 
+    @Operation(
+            summary = "Update Post REST API",
+            description = "Update Post REST API is used to update Post from the database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     @SecurityRequirement(
             name = "Bear Authentication"
 
@@ -92,6 +129,14 @@ public class PostController {
 
     // delete post by id
 
+    @Operation(
+            summary = "Delete Post REST API",
+            description = "Delete Post REST API is used to Delete from the database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status Deleted SUCCESSFULLY"
+    )
     @SecurityRequirement(
             name = "Bear Authentication"
 

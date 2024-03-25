@@ -62,8 +62,6 @@ Learned Customizing Swagger REST Documentation with Annotations
 
 Learned how to add profiles (to deploy in different environments) Spring Boot project.
 
-Learned Transaction Management with Spring Boot and Spring Data JPA
-
 Learned how to deploy the Spring boot Blog app on AWS cloud (production)
 
 Dockering Spring Boot Application Step-by-Step
